@@ -180,7 +180,7 @@ public class GazeInputModule : BaseInputModule {
   }
 
   void UpdateReticle(GameObject previousGazedObject) {
-    if (gazePointer == null) {
+    if (gazePointer == null || pointerData == null) {
       return;
     }
 
@@ -229,7 +229,8 @@ public class GazeInputModule : BaseInputModule {
     }
   }
 
-  private void HandlePendingClick() {
+  private void HandlePendingClick()
+    {
     if (!pointerData.eligibleForClick && !pointerData.dragging) {
       return;
     }
@@ -250,14 +251,17 @@ public class GazeInputModule : BaseInputModule {
       ExecuteEvents.Execute(pointerData.pointerDrag, pointerData, ExecuteEvents.endDragHandler);
     }
 
-    // Clear the click state.
-    pointerData.pointerPress = null;
-    pointerData.rawPointerPress = null;
-    pointerData.eligibleForClick = false;
-    pointerData.clickCount = 0;
-    pointerData.clickTime = 0;
-    pointerData.pointerDrag = null;
-    pointerData.dragging = false;
+        if (pointerData != null)
+        {
+            // Clear the click state.
+            pointerData.pointerPress = null;
+            pointerData.rawPointerPress = null;
+            pointerData.eligibleForClick = false;
+            pointerData.clickCount = 0;
+            pointerData.clickTime = 0;
+            pointerData.pointerDrag = null;
+            pointerData.dragging = false;
+        }
   }
 
   private void HandleTrigger() {
